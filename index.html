@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox Game Download</title>
+
+<style>
+* {
+	box-sizing: border-box;
+	font-family: "Segoe UI", system-ui, sans-serif;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+}
+
+.container {
+	width: 100%;
+	max-width: 420px;
+	padding: 20px;
+}
+
+.card {
+	background: rgba(255, 255, 255, 0.12);
+	backdrop-filter: blur(14px);
+	border-radius: 18px;
+	padding: 28px;
+	box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+	animation: fadeIn 0.8s ease;
+}
+
+h1 {
+	margin: 0 0 10px;
+	text-align: center;
+	font-size: 28px;
+}
+
+.desc {
+	text-align: center;
+	opacity: 0.85;
+	font-size: 14px;
+	margin-bottom: 20px;
+}
+
+.info {
+	background: rgba(0,0,0,0.25);
+	border-radius: 12px;
+	padding: 14px;
+	margin-bottom: 20px;
+}
+
+.info div {
+	display: flex;
+	justify-content: space-between;
+	font-size: 14px;
+	padding: 6px 0;
+}
+
+.info span {
+	opacity: 0.6;
+}
+
+.download-btn {
+	display: block;
+	text-align: center;
+	padding: 14px;
+	border-radius: 12px;
+	background: linear-gradient(135deg, #00c6ff, #0072ff);
+	color: white;
+	font-size: 16px;
+	font-weight: 600;
+	text-decoration: none;
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 10px 25px rgba(0,114,255,0.45);
+}
+
+.download-btn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 15px 35px rgba(0,114,255,0.7);
+}
+
+.footer {
+	margin-top: 16px;
+	text-align: center;
+	font-size: 12px;
+	opacity: 0.6;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/* interactive pulse */
+.pulse {
+	animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+	0% { box-shadow: 0 0 0 0 rgba(0,114,255,0.6); }
+	70% { box-shadow: 0 0 0 18px rgba(0,114,255,0); }
+	100% { box-shadow: 0 0 0 0 rgba(0,114,255,0); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+	<div class="card">
+		<h1>🎮 Roblox Game File</h1>
+		<p class="desc">
+			Download the full Roblox Studio place file.<br>
+			Open it in Roblox Studio to edit or learn.
+		</p>
+
+		<div class="info">
+			<div><span>File Name</span><div id="fileName">MyGame.rbxl</div></div>
+			<div><span>File Size</span><div id="fileSize">Unknown</div></div>
+			<div><span>Last Updated</span><div id="lastUpdated">—</div></div>
+		</div>
+
+		<a id="downloadBtn" class="download-btn pulse" href="MyGame.rbxl" download>
+			⬇ Download Game
+		</a>
+
+		<div class="footer">
+			Made for Roblox Studio • Free to edit
+		</div>
+	</div>
+</div>
+
+<script>
+const fileName = "fisch v3.1 unofficial.rbxl"; // CHANGE THIS IF NEEDED
+
+const fileNameEl = document.getElementById("fileName");
+const fileSizeEl = document.getElementById("fileSize");
+const lastUpdatedEl = document.getElementById("lastUpdated");
+const downloadBtn = document.getElementById("downloadBtn");
+
+fileNameEl.textContent = fileName;
+downloadBtn.href = fileName;
+
+// Fetch file info
+fetch(fileName, { method: "HEAD" })
+	.then(res => {
+		const size = res.headers.get("content-length");
+		const last = res.headers.get("last-modified");
+
+		if (size) {
+			fileSizeEl.textContent = (size / 1024 / 1024).toFixed(2) + " MB";
+		}
+
+		if (last) {
+			lastUpdatedEl.textContent = new Date(last).toDateString();
+		}
+	})
+	.catch(() => {
+		fileSizeEl.textContent = "Unavailable";
+		lastUpdatedEl.textContent = "Unavailable";
+	});
+
+// click animation
+downloadBtn.addEventListener("click", () => {
+	downloadBtn.classList.remove("pulse");
+	downloadBtn.textContent = "⬇ Downloading...";
+	setTimeout(() => {
+		downloadBtn.textContent = "⬇ Download Game";
+	}, 2000);
+});
+</script>
+
+</body>
+</html>
