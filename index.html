@@ -1,401 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>DevCave Marketplace Ad Formatter</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#04101d">
+<meta name="description" content="Ravinder Bhati — AVP / Senior Transformation Consultant, Digital Transformation, Automation, GenAI, RPA, OCR and Process Optimization.">
+<title>Ravinder Bhati | AVP · Senior Transformation Consultant</title>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+  }
+}
+</script>
 
 <style>
-  :root{
-    --bg1: #0f1113;
-    --bg2: #161718;
-    --panel: #1f1f21;
-    --muted: #9aa3ad;
-    --accent1: #00c6ff;
-    --accent2: #0072ff;
-    --successA: #00c853;
-    --successB: #00e676;
-    --copyA: #0072ff;
-    --copyB: #00c6ff;
-  }
+:root{
+  --bg:#030913;
+  --bg2:#071522;
+  --panel:rgba(7,20,35,.68);
+  --panel2:rgba(10,29,49,.72);
+  --line:rgba(148,163,184,.16);
+  --text:#edf6ff;
+  --muted:#9eb3c9;
+  --blue:#38bdf8;
+  --cyan:#22d3ee;
+  --indigo:#818cf8;
+  --green:#34d399;
+  --gold:#facc15;
+  --red:#fb7185;
+  --shadow:0 35px 100px rgba(0,0,0,.42);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:var(--text);background:var(--bg);overflow-x:hidden;line-height:1.55;
+}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
 
-  html,body{height:100%;margin:0;background:linear-gradient(135deg,var(--bg1),var(--bg2));font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial;color:#fff;overflow-y:auto;}
+/* ----- GLOBAL FX ----- */
+.site-bg{position:fixed;inset:0;z-index:-20;overflow:hidden;background:
+  radial-gradient(circle at 50% 0%,rgba(56,189,248,.16),transparent 34%),
+  radial-gradient(circle at 0% 65%,rgba(34,211,238,.08),transparent 30%),
+  radial-gradient(circle at 100% 55%,rgba(129,140,248,.10),transparent 28%),
+  linear-gradient(180deg,#02050a,#06111d 45%,#02050a)}
+.site-bg::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,black,transparent 88%)}
+.ambient{position:absolute;border-radius:999px;filter:blur(90px);opacity:.28;animation:drift 18s ease-in-out infinite}
+.ambient.a{width:340px;height:340px;background:#0ea5e9;left:-140px;top:4%}
+.ambient.b{width:300px;height:300px;background:#4f46e5;right:-120px;top:32%;animation-delay:-6s}
+.ambient.c{width:330px;height:330px;background:#10b981;left:32%;bottom:-160px;animation-delay:-12s}
+@keyframes drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(50px,-35px,0)}}
 
-  /* full-screen particle canvas behind content */
-  #particle-canvas{
-    position:fixed;
-    inset:0;
-    z-index:0; /* behind everything */
-    pointer-events:none; /* don't block clicks */
-    display:block;
-  }
+/* ----- NAV ----- */
+.nav{position:sticky;top:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 5%;min-height:66px;background:rgba(2,7,14,.74);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);box-shadow:0 10px 35px rgba(0,0,0,.24)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:#dbeafe;white-space:nowrap}
+.brand-dot{width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 20px var(--blue)}
+.nav-links{display:flex;list-style:none;gap:5px;flex-wrap:wrap;align-items:center}
+.nav-links a{display:block;padding:8px 11px;border-radius:22px;color:#cbd5e1;font-size:13px;transition:.28s}
+.nav-links a:hover{background:rgba(56,189,248,.12);color:#fff;transform:translateY(-2px)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{border:1px solid var(--line);color:#dbeafe;background:rgba(255,255,255,.05);border-radius:10px;padding:9px 11px;cursor:pointer;transition:.25s}
+.icon-btn:hover{transform:translateY(-2px);background:rgba(56,189,248,.12)}
+.menu{display:none}
 
-  .wrap{
-    position:relative;
-    z-index:5; /* above particles */
-    max-width:980px;
-    margin:36px auto;
-    padding:28px;
-    border-radius:14px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));
-    box-shadow:0 18px 50px rgba(0,0,0,0.7);
-    border: 1px solid rgba(255,255,255,0.03);
-    backdrop-filter: blur(6px);
-    min-height: 80vh;
-  }
+/* ----- HERO ----- */
+.hero{padding:34px 12px 70px;min-height:calc(100vh - 66px);display:grid;place-items:center;perspective:1800px}
+.hero-card{position:relative;width:min(1200px,96%);padding:22px 24px 34px;border-radius:38px;background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.15);backdrop-filter:blur(18px);box-shadow:var(--shadow),inset 0 1px rgba(255,255,255,.18);transform-style:preserve-3d;overflow:hidden;transition:transform .12s ease-out}
+.hero-card::before{content:"";position:absolute;inset:12px;border-radius:28px;border:1px solid rgba(255,255,255,.05);pointer-events:none}
+.hero-top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;z-index:3}
+.status{display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border-radius:999px;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:#bbf7d0;font-size:12px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 14px var(--green)}
+.hero-badge{padding:7px 11px;border-radius:999px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.18);color:#bae6fd;font-size:12px}
+#hero3d{width:100%;height:485px;display:block;touch-action:none}
+.hero-content{text-align:center;transform:translateZ(80px)}
+.avatar-wrap{display:flex;justify-content:center;margin-top:-16px}
+.avatar{position:relative;width:112px;height:112px;border-radius:50%;padding:5px;background:conic-gradient(from 0deg,var(--blue),var(--indigo),var(--cyan),var(--blue));box-shadow:0 0 50px rgba(56,189,248,.35);animation:avatarSpin 12s linear infinite}
+.avatar::before{content:"";position:absolute;inset:-10px;border:1px solid rgba(56,189,248,.22);border-radius:50%;box-shadow:0 0 30px rgba(56,189,248,.13);animation:orbit 4s ease-in-out infinite}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;background:#0b1624;border:4px solid #081321}
+@keyframes avatarSpin{to{transform:rotate(360deg)}}
+@keyframes orbit{50%{transform:scale(1.08)}}
+.hero h1{margin-top:18px;font-size:clamp(43px,8vw,92px);line-height:.94;letter-spacing:clamp(1px,1vw,9px);background:linear-gradient(90deg,#60a5fa,#fff,#22d3ee,#818cf8,#60a5fa);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:shine 7s linear infinite}
+@keyframes shine{to{background-position:400%}}
+.hero-role{margin-top:15px;color:#dbeafe;font-size:clamp(16px,2.7vw,23px)}
+.hero-role strong{color:#60a5fa}
+.hero-intro{max-width:820px;margin:13px auto 0;color:#a8bed4;font-size:15px}
+.hero-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-top:23px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:160px;padding:12px 17px;border-radius:30px;border:1px solid rgba(255,255,255,.13);background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;font-weight:700;font-size:14px;box-shadow:0 13px 30px rgba(37,99,235,.23);cursor:pointer;transition:.3s}
+.btn:hover{transform:translateY(-5px) scale(1.02);box-shadow:0 20px 40px rgba(37,99,235,.36)}
+.btn.green{background:linear-gradient(135deg,#047857,#10b981)}
+.btn.ghost{background:rgba(255,255,255,.05);box-shadow:none}
 
-  /* BRANDING */
-  .branding{
-    display:flex;
-    gap:18px;
-    align-items:center;
-    justify-content:center;
-    margin-bottom:20px;
-  }
-  .logo-wrap{
-    width:112px;
-    height:112px;
-    border-radius:16px;
-    position:relative;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    transform-origin:center;
-    animation: logoFloat 4s ease-in-out infinite;
-  }
-  .logo-wrap img{
-    width:94%;
-    height:94%;
-    object-fit:cover;
-    border-radius:12px;
-    display:block;
-    position:relative;
-    z-index:3;
-    background: #0b0b0b;
-  }
+/* ----- LAYOUT ----- */
+main{width:min(1180px,92%);margin:auto}
+section{margin:30px 0;padding:30px;border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.028));border:1px solid var(--line);backdrop-filter:blur(14px);box-shadow:0 25px 65px rgba(0,0,0,.28);transition:.35s}
+section:hover{transform:translateY(-3px);box-shadow:0 32px 80px rgba(0,0,0,.38)}
+.section-kicker{color:#60a5fa;font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:800;margin-bottom:7px}
+section h2{font-size:clamp(25px,4vw,37px);color:#e0f2fe;margin-bottom:9px}
+.section-sub{color:var(--muted);max-width:850px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
 
-  /* neon animated square border around logo (larger, blurred) */
-  .logo-wrap::before{
-    content:"";
-    position:absolute;
-    inset:-8px;
-    border-radius:18px;
-    background: linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent1));
-    background-size:240% 240%;
-    filter: blur(18px) saturate(120%);
-    z-index:1;
-    opacity:0.95;
-    animation: logoGlow 6s linear infinite;
-  }
+/* ----- PROFILE CARDS ----- */
+.card{padding:23px;border-radius:22px;background:linear-gradient(145deg,rgba(14,165,233,.12),rgba(99,102,241,.07));border:1px solid rgba(148,163,184,.12);transform-style:preserve-3d;transition:.35s}
+.card:hover{transform:perspective(900px) rotateX(8deg) rotateY(-8deg) translateZ(24px) translateY(-7px);box-shadow:-14px 18px 34px rgba(0,0,0,.28)}
+.card-icon{font-size:39px;transform:translateZ(25px)}
+.card h3{margin:10px 0 7px;color:#bfdbfe;transform:translateZ(19px)}
+.card p{font-size:14px;color:#9fb6cc;transform:translateZ(12px)}
 
-  @keyframes logoGlow{
-    0%{ background-position:0% 50%; transform: rotate(0deg) scale(1); }
-    50%{ background-position:100% 50%; transform: rotate(1deg) scale(1.02); }
-    100%{ background-position:0% 50%; transform: rotate(0deg) scale(1); }
-  }
+/* ----- KPI ----- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:15px;perspective:1200px}
+.stat{padding:25px 15px;text-align:center;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.09);transform-style:preserve-3d;transition:.35s}
+.stat:hover{transform:rotateX(10deg) rotateY(-7deg) translateZ(22px)}
+.stat-number{font-size:34px;font-weight:850;color:#60a5fa;transform:translateZ(25px)}
+.stat-label{margin-top:5px;color:#9fb6cc;font-size:13px}
 
-  @keyframes logoFloat {
-    0%{ transform: translateY(0px); }
-    50%{ transform: translateY(-9px); }
-    100%{ transform: translateY(0px); }
-  }
+/* ----- FLOW ----- */
+.flow-wrap{overflow:auto;padding:8px 2px 14px}
+.flow{display:flex;align-items:center;justify-content:center;min-width:930px;gap:12px}
+.flow-node{min-width:125px;padding:16px 12px;text-align:center;border-radius:17px;background:linear-gradient(145deg,#0a2034,#081322);border:1px solid rgba(56,189,248,.28);box-shadow:0 12px 28px rgba(0,0,0,.25);transition:.3s;position:relative}
+.flow-node:hover{transform:translateY(-7px) rotateX(7deg);border-color:#60a5fa;box-shadow:0 18px 35px rgba(56,189,248,.16)}
+.flow-node strong{display:block;color:#dbeafe;font-size:13px}
+.flow-node span{display:block;color:#7dd3fc;font-size:11px;margin-top:5px}
+.arrow{color:#60a5fa;font-size:22px;flex:0 0 auto}
 
-  .branding h1{
-    margin:0;
-    font-size:22px;
-    font-weight:700;
-    background:linear-gradient(90deg,var(--accent1),var(--accent2));
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  .branding .sub{font-size:13px;color:var(--muted);margin-top:6px;text-align:center;}
+/* ----- PROJECTS ----- */
+.project{position:relative;min-height:245px;padding:23px;border-radius:23px;overflow:hidden;background:linear-gradient(145deg,rgba(14,165,233,.13),rgba(15,23,42,.55));border:1px solid rgba(96,165,250,.12);transition:.35s}
+.project:hover{transform:translateY(-8px) perspective(1000px) rotateX(3deg) rotateY(-4deg);box-shadow:0 25px 55px rgba(0,0,0,.35)}
+.project::after{content:"";position:absolute;width:170px;height:170px;right:-70px;top:-70px;border-radius:50%;background:rgba(56,189,248,.07);filter:blur(12px)}
+.project h3{color:#dbeafe;margin-bottom:9px}
+.project .pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:10px;background:rgba(56,189,248,.09);color:#7dd3fc;border:1px solid rgba(56,189,248,.15);margin:0 4px 7px 0}
+.project p{font-size:13px;color:#9fb6cc}
+.project strong{color:#e0f2fe}
 
-  /* responsive form layout */
-  .grid{ display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-top:18px; }
-  label{ display:block; margin-top:12px; font-weight:700; color:#e7eef8; font-size:13px; }
-  input[type="text"], select, textarea{
-    width:100%; padding:12px; border-radius:10px; border:none; background:#222; color:#fff; font-size:14px; outline:none;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-  }
-  textarea{ min-height:140px; resize:vertical; }
-  .full{ grid-column:1 / -1; }
+/* ----- TIMELINE ----- */
+.timeline{position:relative;margin-top:10px}
+.timeline::before{content:"";position:absolute;left:12px;top:0;bottom:0;width:2px;background:linear-gradient(#38bdf8,#818cf8,#34d399)}
+.job{position:relative;padding:0 0 26px 42px}
+.job:last-child{padding-bottom:0}
+.job-dot{position:absolute;left:6px;top:5px;width:14px;height:14px;border-radius:50%;background:#091422;border:3px solid #60a5fa;box-shadow:0 0 16px rgba(96,165,250,.35)}
+.job-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;margin-bottom:5px}
+.job-head h3{color:#dbeafe;font-size:19px}
+.period{padding:4px 9px;border-radius:999px;background:rgba(255,255,255,.05);color:#93c5fd;font-size:11px;border:1px solid var(--line)}
+.job-company{color:#60a5fa;font-size:13px;margin-bottom:7px;font-weight:700}
+.job ul{padding-left:17px;color:#9fb6cc;font-size:13px}
+.job li{margin:6px 0}
 
-  .controls{ display:flex; gap:12px; margin-top:18px; align-items:center; }
-  .btn{ cursor:pointer; border:none; padding:12px 14px; border-radius:10px; font-weight:800; font-size:14px; display:inline-flex; align-items:center; gap:10px; }
-  .btn.generate{ flex:1; background:linear-gradient(90deg,var(--successA),var(--successB)); color:#072410; box-shadow:0 8px 20px rgba(0,200,110,0.12); }
-  .btn.copy{ background:linear-gradient(90deg,var(--copyA),var(--copyB)); color:white; }
-  .btn:active{ transform: translateY(1px); }
+/* ----- CERTS ----- */
+.cert-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+.cert{padding:21px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid var(--line);transition:.3s}
+.cert:hover{transform:translateY(-6px) rotateX(3deg)}
+.cert b{display:block;color:#e0f2fe;margin-bottom:5px}
+.cert span{color:#8ea8bf;font-size:12px}
 
-  .error{ color:#ff6b6b; font-weight:700; margin-top:10px; min-height:22px; }
+/* ----- PHOTO ----- */
+.photo-panel{display:grid;grid-template-columns:270px 1fr;gap:25px;align-items:center}
+.photo-preview{width:245px;height:245px;margin:auto;border-radius:30px;background:linear-gradient(145deg,#0b1e31,#06101c);border:1px solid rgba(96,165,250,.22);box-shadow:0 25px 55px rgba(0,0,0,.4);display:grid;place-items:center;overflow:hidden;transform-style:preserve-3d;transition:.35s}
+.photo-preview:hover{transform:perspective(900px) rotateY(-7deg) rotateX(4deg) translateZ(18px)}
+.photo-preview img{width:100%;height:100%;object-fit:cover}
+.photo-placeholder{text-align:center;color:#7f96ad;padding:20px}
+.photo-placeholder .big{font-size:50px;display:block;margin-bottom:8px}
+.upload-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.file-input{display:none}
+.small-note{font-size:11px;color:#7f96ad}
 
-  .output{ width:100%; margin-top:14px; min-height:220px; padding:12px; border-radius:10px; border:none; background:#0e0e10; color:#ddd; resize:none; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px; white-space:pre-wrap; }
+/* ----- CONTACT ----- */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.contact{padding:20px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid var(--line)}
+.contact b{display:block;color:#dbeafe;margin-bottom:5px}
+.contact span,.contact a{color:#9fb6cc;font-size:13px;word-break:break-word}
 
-  /* footer credit */
-  .footer-credit{ margin-top:28px; padding-top:18px; border-top:1px solid rgba(255,255,255,0.03); text-align:center; color:var(--muted); }
-  .credit-line{ margin-bottom:6px; display:flex; gap:8px; align-items:center; justify-content:center; }
-  .animated-name{ font-weight:900; font-size:16px; background: linear-gradient(90deg,#6ecbff,#3a8eff,#ffd54f,#ff9800); background-size:300% 300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent; animation: nameShift 4s linear infinite, nameFloat 3.2s ease-in-out infinite; text-shadow: 0 6px 24px rgba(0,118,255,0.06); }
-  @keyframes nameShift{ 0%{ background-position:0% 50% } 50%{ background-position:100% 50% } 100%{ background-position:0% 50% } }
-  @keyframes nameFloat{ 0%{ transform: translateY(0px) } 50%{ transform: translateY(-8px) } 100%{ transform: translateY(0px) } }
+/* ----- FOOTER ----- */
+footer{margin-top:60px;padding:45px 20px;text-align:center;background:#02060d;border-top:1px solid var(--line);color:#8ea8bf}
+footer h2{color:#bfdbfe;margin-bottom:7px}
 
-  .version{ font-size:13px; color:#a6b0b8; margin-bottom:6px; }
-  .copyright{ font-size:12px; color:#777; }
+/* ----- TOAST ----- */
+.toast{position:fixed;left:50%;bottom:22px;transform:translate(-50%,20px);opacity:0;pointer-events:none;padding:12px 16px;border-radius:14px;background:rgba(2,6,23,.92);border:1px solid rgba(96,165,250,.22);box-shadow:0 15px 40px rgba(0,0,0,.4);color:#dbeafe;z-index:3000;transition:.3s;font-size:13px}
+.toast.show{opacity:1;transform:translate(-50%,0)}
 
-  @media (max-width:760px){
-    .grid{ grid-template-columns:1fr; }
-    .branding{ flex-direction:column; gap:8px; }
-  }
+/* ----- MOBILE ----- */
+/* ----- GYRO PARALLAX VISUALS ----- */
+.hero-card::after{content:"";position:absolute;inset:-20%;pointer-events:none;background:radial-gradient(circle at calc(50% + (var(--gyro-x,0) * 18%)) calc(50% + (var(--gyro-y,0) * 14%)),rgba(56,189,248,.11),transparent 23%);mix-blend-mode:screen;transition:background .18s ease}
+.motion-active #hero3d{filter:saturate(1.1) contrast(1.03)}
+.motion-active .hero-card{box-shadow:0 55px 140px rgba(0,0,0,.68),0 0 80px rgba(56,189,248,.08),inset 0 1px rgba(255,255,255,.2)}
+
+@media(max-width:900px){
+  .nav-links{display:none;position:absolute;left:0;right:0;top:66px;padding:12px;background:rgba(2,6,14,.97);backdrop-filter:blur(18px);flex-direction:column;border-bottom:1px solid var(--line)}
+  .nav-links.show{display:flex}
+  .menu{display:block}
+  .nav-actions{margin-left:auto}
+  #hero3d{height:390px}
+  .photo-panel{grid-template-columns:1fr}
+  .photo-preview{width:210px;height:210px}
+}
+@media(max-width:600px){
+  .nav{padding:11px 4%;}
+  .brand{font-size:16px}
+  .hero{padding:18px 7px 50px}
+  .hero-card{width:98%;padding:18px 13px 30px;border-radius:27px}
+  .top-lights{display:none}
+  #hero3d{height:285px}
+  .hero h1{letter-spacing:3px}
+  .hero-intro{font-size:13px}
+  .hero-actions{flex-direction:column}
+  .btn{width:100%}
+  main{width:94%}
+  section{padding:20px;border-radius:22px;margin:24px 0}
+  section h2{font-size:24px}
+  .flow{min-width:760px}
+  .job-head h3{font-size:17px}
+  .photo-preview{width:185px;height:185px}
+  .frame{height:260px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
+
 <body>
 
-<canvas id="particle-canvas" aria-hidden="true"></canvas>
+<div class="site-bg"><div class="ambient a"></div><div class="ambient b"></div><div class="ambient c"></div></div>
 
-<div class="wrap" role="main">
-  <div class="branding" role="banner">
-    <div class="logo-wrap" title="DevCove Logo (animated GIF)">
-      <!-- Replace logo.gif with your animated gif file -->
-      <img src="logo.gif" alt="DevCove Logo">
-    </div>
-
-    <div>
-      <h1>DevCove Marketplace</h1>
-      <div class="sub">AD FORMATTER V2</div>
-    </div>
+<nav class="nav">
+  <div class="brand"><span class="brand-dot"></span>RAVINDER BHATI · AVP</div>
+  <div class="nav-actions">
+    <button class="icon-btn menu" id="menuBtn" aria-label="Open menu">☰</button>
+    <button class="icon-btn" id="motionBtn" title="Enable phone motion">📱 Motion</button>
+    <button class="icon-btn" id="themeBtn" title="Change theme">◐</button>
   </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#transformation">Transformation</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-  <div class="grid">
-    <div>
-      <label for="adType">Ad Type</label>
-      <select id="adType" aria-label="Ad Type">
-        <option value="Hiring">Hiring</option>
-        <option value="For Hire">For Hire</option>
-        <option value="Selling">Selling</option>
-      </select>
+<div class="hero">
+  <div class="hero-card" id="heroCard">
+    <div class="hero-top">
+      <div class="status"><i></i> Digital Transformation · Active</div>
+      <div class="hero-badge">Internal - General Use</div>
     </div>
 
-    <div>
-      <label for="ownerName">Post Owner Username (Required)</label>
-      <input id="ownerName" type="text" placeholder="@Username">
+    <canvas id="hero3d"></canvas>
+
+    <div class="hero-content">
+      <div class="avatar-wrap">
+        <div class="avatar">
+          <img id="heroPhoto" src="Ravinder.png" alt="Ravinder Bhati" onerror="this.style.display='none';this.parentElement.innerHTML='<div class=\'photo-placeholder\'><span class=\'big\'>RB</span><div>Add Ravinder.png</div></div>'">
+        </div>
+      </div>
+
+      <h1>RAVINDER BHATI</h1>
+      <p class="hero-role"><strong>AVP</strong> · Senior Transformation Consultant · WNS</p>
+      <p class="hero-intro">19 years of experience in digital transformation, automation and process optimization — designing end-to-end solutions that drive operational excellence and measurable business outcomes.</p>
+
+      <div class="hero-actions">
+        <a class="btn" href="#transformation">⚡ Explore Transformation</a>
+        <a class="btn green" href="#projects">📊 View Key Projects</a>
+        <label class="btn ghost" for="photoUpload">📷 Add / Change Photo</label>
+        <input class="file-input" id="photoUpload" type="file" accept="image/*">
+      </div>
     </div>
-
-    <div>
-      <label for="ownerId">Post Owner ID (Required)</label>
-      <input id="ownerId" type="text" inputmode="numeric" placeholder="123456789012345678">
-    </div>
-
-    <div class="full">
-      <label for="adContent">Ad Content</label>
-      <textarea id="adContent" placeholder="Write your ad here..."></textarea>
-    </div>
-  </div>
-
-  <div class="controls" role="toolbar">
-    <button class="btn generate" id="generateBtn">Generate Formatted Ad</button>
-    <button class="btn copy" id="copyBtn">💎 Copy To Clipboard</button>
-  </div>
-
-  <div class="error" id="errorBox" role="status" aria-live="polite"></div>
-
-  <label style="margin-top:14px;display:block;font-weight:700;color:#e7eef8;margin-bottom:6px">Formatted Discord Ad</label>
-  <textarea id="output" class="output" readonly aria-label="Formatted Ad Output"></textarea>
-
-  <div class="footer-credit" role="contentinfo">
-    <div class="credit-line">
-      Made by <span class="animated-name">@___devdark__</span> for <strong style="color:var(--accent1);">DevCove</strong>
-    </div>
-    <div class="version">Version 2.1.0</div>
-    <div class="copyright">© 2025 DevCove. All rights reserved.</div>
   </div>
 </div>
 
-<script>
-/* ---------------------------
-   Particle background (Canvas)
-   --------------------------- */
-(function(){
-  const canvas = document.getElementById('particle-canvas');
-  const ctx = canvas.getContext('2d');
-  let W = canvas.width = window.innerWidth;
-  let H = canvas.height = window.innerHeight;
-  let particles = [];
-  let particleCount = Math.floor(Math.min(100, Math.max(30, (W*H)/90000))); // scale count by screen size
-  // colors pulled from accent gradient
-  const colors = [
-    {r: 0, g:198, b:255, a:0.10},
-    {r: 0, g:114, b:255, a:0.08},
-    {r: 255, g:213, b:79, a:0.06}
-  ];
+<main>
 
-  function rand(min,max){ return Math.random()*(max-min)+min; }
+<section id="about">
+  <div class="section-kicker">Profile</div>
+  <h2>Turning complexity into practical transformation</h2>
+  <p class="section-sub">Strong background in BPO operations and solution delivery, with experience across healthcare, telecom, e-commerce, social media and talent acquisition.</p>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🔄</div><h3>Digital Transformation</h3><p>Strategy & execution, operating improvement and end-to-end automation solution design.</p></div>
+    <div class="card"><div class="card-icon">🤖</div><h3>AI & Automation</h3><p>Generative AI, RPA, OCR and workflow innovation focused on business value.</p></div>
+    <div class="card"><div class="card-icon">📈</div><h3>Operational Excellence</h3><p>Lean methodologies, productivity improvement, quality and measurable outcomes.</p></div>
+    <div class="card"><div class="card-icon">👥</div><h3>Leadership</h3><p>Cross-functional team leadership, workshops, stakeholder alignment and solution delivery.</p></div>
+  </div>
+</section>
 
-  function createParticle(i){
-    const size = rand(0.9, 3.2);
-    const p = {
-      x: Math.random() * W,
-      y: Math.random() * H,
-      vx: rand(-0.25, 0.25),
-      vy: rand(-0.3, -0.05), // slight upward drift
-      size: size,
-      baseSize: size,
-      color: colors[Math.floor(Math.random()*colors.length)],
-      life: rand(80, 220) + Math.random()*200,
-      phase: Math.random()*Math.PI*2
-    };
-    particles[i] = p;
+<section>
+  <div class="section-kicker">Executive Snapshot</div>
+  <h2>Transformation dashboard</h2>
+  <div class="stats">
+    <div class="stat"><div class="stat-number">19+</div><div class="stat-label">Years of Experience</div></div>
+    <div class="stat"><div class="stat-number">70%</div><div class="stat-label">Manual Effort Reduction</div></div>
+    <div class="stat"><div class="stat-number">3×</div><div class="stat-label">Claim Throughput</div></div>
+    <div class="stat"><div class="stat-number">92%</div><div class="stat-label">Case Classification Accuracy</div></div>
+    <div class="stat"><div class="stat-number">60%</div><div class="stat-label">Backlog Reduction</div></div>
+    <div class="stat"><div class="stat-number">40%</div><div class="stat-label">Resolution-Time Improvement</div></div>
+  </div>
+</section>
+
+<section id="transformation">
+  <div class="section-kicker">Transformation Method</div>
+  <h2>From process pain point to measurable value</h2>
+  <p class="section-sub">A practical sequence for understanding the end-to-end process, identifying inefficiencies, designing a compelling business case and scaling the solution.</p>
+  <div class="flow-wrap">
+    <div class="flow">
+      <div class="flow-node"><strong>Understand</strong><span>Business Process</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Analyse</strong><span>Data & Pain Points</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Ideate</strong><span>Automation Opportunity</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Design</strong><span>End-to-End Solution</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Business Case</strong><span>ROI & Value</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Implement</strong><span>Deliver & Govern</span></div><div class="arrow">→</div>
+      <div class="flow-node"><strong>Scale</strong><span>Operational Excellence</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-kicker">Key Projects & Achievements</div>
+  <h2>Business outcomes across industries</h2>
+  <div class="grid">
+    <article class="project"><div class="pill">Healthcare</div><div class="pill">RPA</div><h3>Automated Claims Processing</h3><p>Automated claims processing via RPA for back-office operations, <strong>reducing manual effort by 70%</strong> and increasing claim throughput by <strong>3×</strong>.</p></article>
+    <article class="project"><div class="pill">Healthcare</div><div class="pill">GenAI</div><h3>Member Portal Virtual Assistant</h3><p>Deployed a GenAI virtual assistant on the member portal, <strong>lowering inbound calls by 35%</strong> and improving first-contact resolution.</p></article>
+    <article class="project"><div class="pill">Healthcare</div><div class="pill">Workflow</div><h3>Claim Auto-Approval</h3><p>Streamlined auto-approval for OTC drugs, RX, copay and deductible claims, cutting approval time from <strong>72 hours to under 12 hours</strong>.</p></article>
+    <article class="project"><div class="pill">Telecom</div><div class="pill">GenAI</div><h3>Pending Case Resolution</h3><p>Implemented a GenAI model to interpret system notes and auto-resolve customer pending cases, improving resolution time by <strong>40%</strong> and achieving <strong>92% accuracy</strong>.</p></article>
+    <article class="project"><div class="pill">Telecom</div><div class="pill">B2B Chatbot</div><h3>B2B Self-Service</h3><p>Developed a B2B chatbot, <strong>reducing manual CS dependency by 38%</strong> and increasing SLA compliance from <strong>86% to 92%</strong>.</p></article>
+    <article class="project"><div class="pill">E-commerce</div><div class="pill">Voice Bot</div><h3>24/7 Self-Service</h3><p>Launched chatbot and voice bot on a website, achieving a <strong>28% drop in CS ticket volume</strong> and enabling 24/7 self-service.</p></article>
+    <article class="project"><div class="pill">Broadband</div><div class="pill">Automation</div><h3>Email Ticket Distribution</h3><p>Automated email ticket distribution for a UK broadband provider, <strong>decreasing backlog by 60%</strong> and accelerating response time by <strong>50%</strong>.</p></article>
+    <article class="project"><div class="pill">Social Media</div><div class="pill">AI</div><h3>Quality Audit & AI</h3><p>Led outbound calling automation and quality audit, while integrating real-time AI for accent translation and noise cancellation, improving CSAT by <strong>7%</strong> and reducing AHT by <strong>22%</strong>.</p></article>
+    <article class="project"><div class="pill">Talent Acquisition</div><div class="pill">AI Automation</div><h3>Automated Initial Screening</h3><p>Implemented Berribot for automated initial screening, filtering <strong>60–65% of unqualified candidates</strong> and reducing recruiter workload by <strong>40%</strong>.</p></article>
+  </div>
+</section>
+
+<section>
+  <div class="section-kicker">Transformation Architecture</div>
+  <h2>Solution building blocks</h2>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🧠</div><h3>Generative AI</h3><p>Use-case identification, solution design and GenAI implementation for service and operations.</p></div>
+    <div class="card"><div class="card-icon">⚙️</div><h3>RPA</h3><p>Robotic Process Automation strategies for repetitive back-office and operational activities.</p></div>
+    <div class="card"><div class="card-icon">🔎</div><h3>OCR</h3><p>Optical Character Recognition solutions that turn documents and unstructured inputs into usable data.</p></div>
+    <div class="card"><div class="card-icon">🗺️</div><h3>Workflow Innovation</h3><p>Future-state process design, controls, handoffs and streamlined operating workflows.</p></div>
+    <div class="card"><div class="card-icon">📊</div><h3>Business Case</h3><p>Business cases built with business leaders and COE/IT teams to connect effort with measurable value.</p></div>
+    <div class="card"><div class="card-icon">🛡️</div><h3>Risk & Governance</h3><p>Potential-risk identification, mitigation strategies and adherence to standards and regulatory requirements.</p></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-kicker">Career</div>
+  <h2>Relevant work experience</h2>
+  <div class="timeline">
+    <div class="job"><div class="job-dot"></div><div class="job-head"><h3>Senior Transformation Consultant</h3><span class="period">Feb 2020 – Present</span></div><div class="job-company">Wipro LTD · Gurugram / Noida</div><ul><li>Work with business teams to simplify and improve operations by analysing processes and creating end-to-end automation solution designs.</li><li>Drive operational excellence through lean methodologies, eliminating inefficiencies and enhancing productivity.</li><li>Work with business leaders and COE/IT teams to create compelling business cases.</li><li>Facilitate workshops to understand end-to-end processes and create automation solution proposals.</li><li>Identify potential risks, implement mitigation strategies and ensure adherence to industry standards and regulatory requirements.</li></ul></div>
+    <div class="job"><div class="job-dot"></div><div class="job-head"><h3>Service Manager - Transformation</h3><span class="period">Sep 2018 – Jan 2020</span></div><div class="job-company">Wipro LTD</div><ul><li>Managed end-to-end project delivery, aligned to client objectives and organizational goals.</li><li>Developed and implemented process improvements to increase productivity and operational excellence.</li><li>Partnered with clients to gather and document business requirements.</li><li>Supervised SMEs and conducted workshops and training sessions.</li></ul></div>
+    <div class="job"><div class="job-dot"></div><div class="job-head"><h3>Manager - Transformation</h3><span class="period">Jan 2011 – Aug 2018</span></div><div class="job-company">Alight Solutions</div><ul><li>Provided expert insights and recommendations to improve business processes and workflows.</li><li>Developed best practices and standard operating procedures.</li><li>Acted as liaison between management and operational teams.</li><li>Conducted quality assurance and compliance checks and delivered training sessions.</li></ul></div>
+    <div class="job"><div class="job-dot"></div><div class="job-head"><h3>Agent / SME</h3><span class="period">Oct 2006 – Dec 2010</span></div><div class="job-company">Alight Solutions · US Healthcare</div><ul><li>Processed US healthcare claims and managed process escalations.</li><li>Worked as a subject matter expert supporting healthcare operations.</li></ul></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="section-kicker">Core Competencies</div>
+  <h2>Transformation skill stack</h2>
+  <div class="grid">
+    <div class="card"><div class="card-icon">🔄</div><h3>Digital Transformation Strategy & Execution</h3><p>Strategy, execution, operating improvement and practical solution roadmaps.</p></div>
+    <div class="card"><div class="card-icon">📋</div><h3>Project & Program Management</h3><p>End-to-end delivery with alignment to objectives, deadlines, budgets and outcomes.</p></div>
+    <div class="card"><div class="card-icon">🧪</div><h3>Lean & Quality-Based Process Improvement</h3><p>Lean thinking, inefficiency elimination, quality improvement and productivity focus.</p></div>
+    <div class="card"><div class="card-icon">🤖</div><h3>Robotic Process Automation</h3><p>Design and implementation of automation strategies for repetitive operations.</p></div>
+    <div class="card"><div class="card-icon">⚡</div><h3>Agile & Waterfall Methodologies</h3><p>Flexible delivery using structured waterfall and agile approaches.</p></div>
+    <div class="card"><div class="card-icon">👥</div><h3>Cross-Functional Team Leadership</h3><p>Business, COE, IT and operations collaboration to deliver change.</p></div>
+    <div class="card"><div class="card-icon">🧠</div><h3>Generative AI Implementation</h3><p>GenAI use cases focused on customer experience, service and operational efficiency.</p></div>
+    <div class="card"><div class="card-icon">📄</div><h3>Optical Character Recognition</h3><p>OCR solutions for extracting value from document-heavy processes.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-kicker">Certifications & Education</div>
+  <h2>Credentials</h2>
+  <div class="cert-grid">
+    <div class="cert"><b>Project Management Professional (PMP)</b><span>PMI</span></div>
+    <div class="cert"><b>Agile Certified Practitioner (ACP)</b><span>PMI</span></div>
+    <div class="cert"><b>Lean Six Sigma Green Belt</b><span>Process & Quality Improvement</span></div>
+    <div class="cert"><b>Post Graduate Program in Artificial Intelligence</b><span>University of Texas - McCombs School of Business</span></div>
+    <div class="cert"><b>Executive MBA</b><span>Institute of Management Technology, Ghaziabad</span></div>
+    <div class="cert"><b>Bachelor’s Degree</b><span>Delhi University</span></div>
+    <div class="cert"><b>12th CBSE Board</b><span>DAV Public School, Faridabad</span></div>
+  </div>
+</section>
+
+<section id="photo">
+  <div class="section-kicker">Profile Image</div>
+  <h2>Ravinder's profile icon</h2>
+  <p class="section-sub">Place <strong>Ravinder.png</strong> beside this HTML file for the default photo, or use the upload button to preview another image on the current device.</p>
+  <div class="photo-panel">
+    <div class="photo-preview" id="photoPreview">
+      <div class="photo-placeholder"><span class="big">RB</span>Add Ravinder.png</div>
+    </div>
+    <div>
+      <h3 style="color:#dbeafe;margin-bottom:8px">Interactive 3D identity card</h3>
+      <p style="color:#9fb6cc;font-size:14px">The profile image is used in the hero badge and can be replaced locally without changing the website code.</p>
+      <div class="upload-row">
+        <label class="btn" for="photoUpload2">📷 Upload Ravinder.png</label>
+        <input class="file-input" id="photoUpload2" type="file" accept="image/*">
+        <span class="small-note">No image is uploaded anywhere by this page.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-kicker">Transformation Mindset</div>
+  <h2>Simple principles, measurable outcomes</h2>
+  <div class="grid">
+    <div class="card"><div class="card-icon">1️⃣</div><h3>Understand the process</h3><p>Facilitate workshops with business operations and functional teams to understand the end-to-end process.</p></div>
+    <div class="card"><div class="card-icon">2️⃣</div><h3>Remove inefficiency</h3><p>Use lean methodologies and automation to eliminate repetitive effort and operational friction.</p></div>
+    <div class="card"><div class="card-icon">3️⃣</div><h3>Build the right solution</h3><p>Connect business needs with AI, RPA, OCR, workflow and digital capabilities.</p></div>
+    <div class="card"><div class="card-icon">4️⃣</div><h3>Prove business value</h3><p>Track productivity, SLA, quality, customer experience, backlog and ROI improvements.</p></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-kicker">Contact</div>
+  <h2>Connect with Ravinder</h2>
+  <div class="contact-grid">
+    <div class="contact"><b>📱 Mobile</b><a href="tel:+919810468131">+91 9810468131</a></div>
+    <div class="contact"><b>✉️ Email</b><a href="mailto:ravibhati5076@gmail.com">ravibhati5076@gmail.com</a></div>
+    <div class="contact"><b>💼 Current Role</b><span>AVP · Senior Transformation Consultant · WNS</span></div>
+    <div class="contact"><b>📍 Location</b><span>Faridabad, Haryana</span></div>
+  </div>
+  <div class="hero-actions" style="margin-top:20px">
+    <a class="btn" href="mailto:ravibhati5076@gmail.com">✉️ Email Ravinder</a>
+    <a class="btn green" href="tel:+919810468131">📱 Call Ravinder</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <h2>RAVINDER BHATI</h2>
+  <p>AVP · Senior Transformation Consultant · WNS</p>
+  <p style="margin-top:7px">Digital Transformation · Automation · GenAI · RPA · OCR · Process Excellence</p>
+  <p style="margin-top:13px;font-size:11px">Built as a single-file interactive portfolio. 3D scene rendered with Three.js.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const canvas=document.getElementById("hero3d");
+const scene=new THREE.Scene();
+scene.fog=new THREE.FogExp2(0x06111e,.028);
+
+const camera=new THREE.PerspectiveCamera(48,1,.1,1000);
+camera.position.set(8,5.5,10);
+
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:"high-performance"});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setClearColor(0x000000,0);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+controls.dampingFactor=.055;
+controls.enablePan=false;
+controls.minDistance=6;
+controls.maxDistance=18;
+controls.maxPolarAngle=Math.PI*.48;
+controls.target.set(0,1.0,0);
+
+scene.add(new THREE.AmbientLight(0xffffff,1.35));
+const key=new THREE.DirectionalLight(0xffffff,2.5);key.position.set(-7,12,8);key.castShadow=true;scene.add(key);
+const blue=new THREE.PointLight(0x38bdf8,14,30);blue.position.set(5,6,2);scene.add(blue);
+const cyan=new THREE.PointLight(0x22d3ee,10,25);cyan.position.set(-5,4,-2);scene.add(cyan);
+const green=new THREE.PointLight(0x34d399,8,20);green.position.set(0,2,5);scene.add(green);
+
+/* Digital floor */
+const floor=new THREE.Mesh(new THREE.BoxGeometry(14,.35,9),new THREE.MeshStandardMaterial({color:0x061522,roughness:.72,metalness:.24}));
+floor.position.y=-.32;floor.receiveShadow=true;scene.add(floor);
+const grid=new THREE.GridHelper(14,18,0x1d4ed8,0x0c2b46);grid.position.y=-.12;scene.add(grid);
+
+/* Laptop factory */
+function laptop(x,y,z,scale,screenColor){
+  const g=new THREE.Group();
+  const base=new THREE.Mesh(new THREE.BoxGeometry(3.0,.18,2.0),new THREE.MeshStandardMaterial({color:0x334155,metalness:.82,roughness:.25}));
+  base.position.y=.1;base.castShadow=true;g.add(base);
+  const frame=new THREE.Mesh(new THREE.BoxGeometry(2.9,1.9,.16),new THREE.MeshStandardMaterial({color:0x111827,metalness:.7,roughness:.28}));
+  frame.position.set(0,1.05,-.82);frame.rotation.x=THREE.MathUtils.degToRad(-10);frame.castShadow=true;g.add(frame);
+  const screen=new THREE.Mesh(new THREE.PlaneGeometry(2.5,1.42),new THREE.MeshBasicMaterial({color:screenColor}));
+  screen.position.set(0,1.06,-.91);screen.rotation.x=THREE.MathUtils.degToRad(-10);g.add(screen);
+  const keyboard=new THREE.Mesh(new THREE.PlaneGeometry(2.45,1.35),new THREE.MeshBasicMaterial({color:0x132f51}));
+  keyboard.rotation.x=-Math.PI/2;keyboard.position.set(0,.205,.07);g.add(keyboard);
+  for(let i=-4;i<=4;i++){const keyMesh=new THREE.Mesh(new THREE.BoxGeometry(.25,.025,.18),new THREE.MeshBasicMaterial({color:0x60a5fa}));keyMesh.position.set(i*.28,.23,-.18);g.add(keyMesh)}
+  g.position.set(x,y,z);g.scale.setScalar(scale);return g;
+}
+const lap1=laptop(-3.7,.05,.1,.95,0x0ea5e9);
+const lap2=laptop(3.2,.05,-.55,.76,0x6366f1);
+const lap3=laptop(0,.0,2.2,.62,0x10b981);
+scene.add(lap1,lap2,lap3);
+
+/* Monitor */
+const monitor=new THREE.Group();
+const monitorFrame=new THREE.Mesh(new THREE.BoxGeometry(3.2,1.9,.15),new THREE.MeshStandardMaterial({color:0x0f172a,metalness:.72,roughness:.28}));monitorFrame.position.y=1.6;monitorFrame.castShadow=true;monitor.add(monitorFrame);
+const monitorScreen=new THREE.Mesh(new THREE.PlaneGeometry(2.8,1.55),new THREE.MeshBasicMaterial({color:0x164e63}));monitorScreen.position.set(0,1.6,-.091);monitor.add(monitorScreen);
+const stand=new THREE.Mesh(new THREE.CylinderGeometry(.09,.11,.85,16),new THREE.MeshStandardMaterial({color:0x64748b,metalness:.7,roughness:.3}));stand.position.y=.99;monitor.add(stand);
+const foot=new THREE.Mesh(new THREE.BoxGeometry(1.2,.08,.65),new THREE.MeshStandardMaterial({color:0x334155,metalness:.6,roughness:.35}));foot.position.y=.58;monitor.add(foot);
+monitor.position.set(0,.0,-1.8);monitor.rotation.y=.08;scene.add(monitor);
+
+/* Flowchart nodes and connectors */
+const flow=new THREE.Group();
+const nodes=[];
+function node(x,y,z,color,label){
+  const g=new THREE.Group();
+  const m=new THREE.Mesh(new THREE.BoxGeometry(1.45,.62,.72),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:.12,metalness:.45,roughness:.32}));
+  m.castShadow=true;g.add(m);g.position.set(x,y,z);g.userData.label=label;flow.add(g);nodes.push(g);return g;
+}
+function connect(a,b){const dir=new THREE.Vector3().subVectors(b,a),len=dir.length();const c=new THREE.Mesh(new THREE.CylinderGeometry(.045,.045,len,12),new THREE.MeshBasicMaterial({color:0x60a5fa}));c.position.copy(a.clone().add(b).multiplyScalar(.5));c.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),dir.normalize());flow.add(c)}
+const n1=node(-3.0,2.2,-.9,0x2563eb,"Process");
+const n2=node(-1.0,2.8,-.9,0x0ea5e9,"Analyse");
+const n3=node(1.1,2.4,-.9,0x6366f1,"Design");
+const n4=node(3.1,3.0,-.9,0x22c55e,"Automate");
+connect(n1.position,n2.position);connect(n2.position,n3.position);connect(n3.position,n4.position);scene.add(flow);
+
+/* KPI rings */
+const rings=[];
+[[4.8,2.5,-2.5,0xfacc15],[5.5,1.5,-2.0,0x38bdf8],[-5.1,2.0,-2.6,0x34d399]].forEach(v=>{const r=new THREE.Mesh(new THREE.TorusGeometry(.55,.08,14,48),new THREE.MeshStandardMaterial({color:v[3],emissive:v[3],emissiveIntensity:.45,metalness:.5,roughness:.24}));r.position.set(v[0],v[1],v[2]);r.rotation.x=.55;scene.add(r);rings.push(r)});
+
+/* Digital particles */
+const particles=[];
+for(let i=0;i<55;i++){
+  const p=new THREE.Mesh(new THREE.SphereGeometry(.028,8,8),new THREE.MeshBasicMaterial({color:i%3===0?0x34d399:(i%3===1?0x38bdf8:0x818cf8)}));
+  p.position.set((Math.random()-.5)*13,Math.random()*5.2-.2,(Math.random()-.5)*7);scene.add(p);particles.push(p);
+}
+
+/* Floating data cubes */
+const cubes=[];
+for(let i=0;i<8;i++){
+  const c=new THREE.Mesh(new THREE.BoxGeometry(.16,.16,.16),new THREE.MeshStandardMaterial({color:i%2?0x38bdf8:0x818cf8,emissive:i%2?0x38bdf8:0x818cf8,emissiveIntensity:.55,metalness:.4,roughness:.3}));
+  c.position.set((Math.random()-.5)*12,1+Math.random()*4,(Math.random()-.5)*6);scene.add(c);c.userData.seed=Math.random()*10;cubes.push(c);
+}
+
+function resize(){const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);renderer.setPixelRatio(Math.min(devicePixelRatio,2));camera.aspect=w/h;camera.updateProjectionMatrix()}
+window.addEventListener('resize',resize);resize();
+
+let autoRotate=true;
+let gyroEnabled=false;
+let gyroX=0,gyroY=0;
+let gyroTargetX=0,gyroTargetY=0;
+let gyroHasSignal=false;
+
+function animate(){requestAnimationFrame(animate);const t=performance.now()*0.001;
+  lap1.rotation.y=Math.sin(t*.55)*.08;lap2.rotation.y=Math.sin(t*.72+1)*-.11;lap3.rotation.y=Math.sin(t*.8+2)*.13;
+  lap1.position.y=.05+Math.sin(t*1.15)*.06;lap2.position.y=.05+Math.sin(t*1.25+1)*.05;lap3.position.y=.0+Math.sin(t*1.35+2)*.045;
+  monitor.rotation.y=.08+Math.sin(t*.35)*.07;
+  nodes.forEach((n,i)=>{n.position.y += Math.sin(t*1.1+i)*.0005;n.rotation.y=Math.sin(t*.7+i)*.08});
+  rings.forEach((r,i)=>{r.rotation.z+=.008*(i+1);r.position.y+=Math.sin(t*.9+i)*.0006});
+  particles.forEach((p,i)=>{p.position.y+=Math.sin(t+i)*.0006;p.position.x+=Math.cos(t*.2+i)*.00015});
+  cubes.forEach(c=>{c.rotation.x+=.012;c.rotation.y+=.015;c.position.y+=Math.sin(t+c.userData.seed)*.0009});
+
+  gyroX+=(gyroTargetX-gyroX)*.09;
+  gyroY+=(gyroTargetY-gyroY)*.09;
+
+  if(gyroEnabled){
+    const radius=11.1;
+    const azimuth=Math.PI/2+gyroX*.62;
+    const elevation=.46+gyroY*.40;
+    camera.position.x=Math.cos(azimuth)*Math.cos(elevation)*radius;
+    camera.position.z=Math.sin(azimuth)*Math.cos(elevation)*radius;
+    camera.position.y=3.9+Math.sin(elevation)*4.4;
+    camera.lookAt(0,1.15,0);
+    controls.target.set(0,1.15,0);
+    hero.style.transform=`rotateX(${(-gyroY*3.6).toFixed(2)}deg) rotateY(${(gyroX*5.2).toFixed(2)}deg)`;
+    document.documentElement.style.setProperty('--gyro-x',`${gyroX.toFixed(3)}`);
+    document.documentElement.style.setProperty('--gyro-y',`${gyroY.toFixed(3)}`);
+  }else if(autoRotate){
+    const radius=10.7;
+    camera.position.x=Math.cos(t*.12)*radius;
+    camera.position.z=Math.sin(t*.12)*radius;
+    camera.position.y=5.5+Math.sin(t*.3)*.4;
+    controls.target.set(0,1.05,0);
+    camera.lookAt(0,1.05,0);
   }
 
-  function init(){
-    particles = [];
-    for(let i=0;i<particleCount;i++) createParticle(i);
-  }
+  blue.intensity=13+Math.sin(t*2)*3;cyan.intensity=9+Math.sin(t*1.5)*2;green.intensity=7+Math.sin(t*1.7)*2;
+  if(!gyroEnabled)controls.update();
+  renderer.render(scene,camera)
+}
+animate();
 
-  function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-    // recalc count lightly on resize
-    particleCount = Math.floor(Math.min(120, Math.max(20, (W*H)/90000)));
-    init();
-  }
+/* Desktop 3D tilt */
+const hero=document.getElementById('heroCard');
+hero.addEventListener('mousemove',e=>{if(innerWidth<850||gyroEnabled)return;const r=hero.getBoundingClientRect(),x=(e.clientX-r.left-r.width/2)/(r.width/2),y=(e.clientY-r.top-r.height/2)/(r.height/2);hero.style.transform=`rotateX(${-y*3}deg) rotateY(${x*4}deg)`});
+hero.addEventListener('mouseleave',()=>{if(!gyroEnabled)hero.style.transform='rotateX(0deg) rotateY(0deg)'});
 
-  window.addEventListener('resize', resize);
+/* ============================================================
+   PREMIUM MOBILE GYRO ENGINE
+   - Requires a user gesture on iOS.
+   - Compensates for portrait/landscape screen rotation.
+   - Smooths sensor noise and adds layered visual parallax.
+   ============================================================ */
+function getScreenAngle(){
+  if(screen.orientation&&typeof screen.orientation.angle==='number')return ((screen.orientation.angle%360)+360)%360;
+  return typeof window.orientation==='number'?(((window.orientation%360)+360)%360):0;
+}
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
+function applyOrientation(beta,gamma){
+  const angle=getScreenAngle();
+  let x=gamma;
+  let y=beta-45;
 
-    for(let i=0;i<particles.length;i++){
-      const p = particles[i];
-      // gentle sinusoidal size change for twinkle
-      p.phase += 0.01 + Math.random()*0.01;
-      const twinkle = 0.9 + 0.2 * Math.sin(p.phase*1.5);
-      const r = p.size * twinkle;
+  if(angle===90){const tmp=x;x=-y;y=tmp}
+  else if(angle===270){const tmp=x;x=y;y=-tmp}
+  else if(angle===180){x=-x;y=-y}
 
-      // draw radial glow
-      const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, Math.max(r*3, 8));
-      const c = p.color;
-      grad.addColorStop(0, `rgba(${c.r},${c.g},${c.b},${c.a})`);
-      grad.addColorStop(0.6, `rgba(${c.r},${c.g},${c.b},${c.a*0.25})`);
-      grad.addColorStop(1, `rgba(${c.r},${c.g},${c.b},0)`);
-      ctx.beginPath();
-      ctx.fillStyle = grad;
-      ctx.arc(p.x, p.y, Math.max(r*2, 4), 0, Math.PI*2);
-      ctx.fill();
+  const dead=2.2;
+  if(Math.abs(x)<dead)x=0;
+  if(Math.abs(y)<dead)y=0;
 
-      // move
-      p.x += p.vx + Math.sin(p.phase)*0.05;
-      p.y += p.vy;
+  gyroTargetX=Math.max(-1,Math.min(1,x/30));
+  gyroTargetY=Math.max(-1,Math.min(1,y/25));
+  gyroHasSignal=true;
+}
 
-      // gentle horizontal wrap and vertical wrap from bottom to top
-      if(p.x < -20) p.x = W + 20;
-      if(p.x > W + 20) p.x = -20;
-      if(p.y < -30) p.y = H + 20;
-      if(p.y > H + 40) p.y = -40;
-    }
+function handleOrientation(e){
+  if(!e)return;
+  if(e.beta===null&&e.gamma===null)return;
+  applyOrientation(e.beta||0,e.gamma||0);
+}
 
-    requestAnimationFrame(draw);
-  }
-
-  // pause animation when tab not visible to save CPU
-  let running = true;
-  document.addEventListener('visibilitychange', function(){
-    running = !document.hidden;
-    if(running) requestAnimationFrame(draw);
-  });
-
-  init();
-  requestAnimationFrame(draw);
-})();
-
-/* ---------------------------
-   Main UI logic (generate/copy)
-   --------------------------- */
-(function(){
-  const adTypeEl = document.getElementById("adType");
-  const ownerNameEl = document.getElementById("ownerName");
-  const ownerIdEl = document.getElementById("ownerId");
-  const adContentEl = document.getElementById("adContent");
-  const errorBox = document.getElementById("errorBox");
-  const outputEl = document.getElementById("output");
-  const generateBtn = document.getElementById("generateBtn");
-  const copyBtn = document.getElementById("copyBtn");
-
-  function getPing(type){
-    if(type === "Hiring") return "@For-hire ping";
-    if(type === "For Hire") return "@Hiring ping";
-    if(type === "Selling") return "@Selling ping";
-    return "";
-  }
-
-  function validate(ownerName, ownerId, content){
-    if(!ownerName || !ownerId){
-      return "Post Owner Username and Owner ID are MANDATORY.";
-    }
-    if(!/^\d+$/.test(ownerId)){
-      return "Owner ID must contain numbers only.";
-    }
-    if(!content){
-      return "Ad Content cannot be empty.";
-    }
-    return "";
-  }
-
-  function buildFormatted(ownerName, ownerId, content, type){
-    const ping = getPing(type);
-    return `**⚠️ PLEASE MESSAGE THE POST OWNER, STAFF WILL NOT RESPOND ⚠️**
-
-${content}
-
-**AD OWNER:** ${ownerName} (<@${ownerId}>)
-
-**⚠️ PLEASE MESSAGE THE POST OWNER, STAFF WILL NOT RESPOND ⚠️**
-**---------------------------------------------------------- **
-
-${ping}`;
-  }
-
-  generateBtn.addEventListener("click", function(){
-    errorBox.textContent = "";
-    const ownerName = ownerNameEl.value.trim();
-    const ownerId = ownerIdEl.value.trim();
-    const content = adContentEl.value.trim();
-    const type = adTypeEl.value;
-
-    const err = validate(ownerName, ownerId, content);
-    if(err){
-      errorBox.textContent = err;
-      outputEl.value = "";
+async function enableMotion(){
+  try{
+    if(!('DeviceOrientationEvent'in window)){
+      toast('This device/browser does not provide orientation sensors.');
       return;
     }
 
-    outputEl.value = buildFormatted(ownerName, ownerId, content, type);
-    outputEl.focus();
-    outputEl.select();
-  });
-
-  copyBtn.addEventListener("click", async function(){
-    const text = outputEl.value.trim();
-    if(!text){
-      errorBox.textContent = "Generate the ad first before copying.";
-      return;
-    }
-    try{
-      await navigator.clipboard.writeText(text);
-      copyBtn.textContent = "✅ Copied";
-      setTimeout(()=> { copyBtn.innerHTML = "💎 Copy To Clipboard"; }, 1400);
-    }catch(e){
-      // fallback
-      outputEl.select();
-      try{
-        document.execCommand('copy');
-        copyBtn.textContent = "✅ Copied";
-        setTimeout(()=> { copyBtn.innerHTML = "💎 Copy To Clipboard"; }, 1400);
-      }catch(err){
-        alert("Could not copy automatically. Please select and copy manually.");
+    /* iOS Safari requires permission from a click/tap. */
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      const permission=await DeviceOrientationEvent.requestPermission();
+      if(permission!=='granted'){
+        toast('Motion permission was not granted.');
+        return;
       }
     }
-  });
 
-})();
+    window.removeEventListener('deviceorientation',handleOrientation,true);
+    window.addEventListener('deviceorientation',handleOrientation,true);
+
+    gyroEnabled=true;
+    document.body.classList.add('motion-active');
+    autoRotate=false;
+    controls.enabled=false;
+    gyroX=gyroY=gyroTargetX=gyroTargetY=0;
+    document.getElementById('motionBtn').textContent='📱 Motion ON';
+    toast('3D motion ON — gently tilt your phone.');
+  }catch(error){
+    console.error(error);
+    toast('Motion was blocked. Use HTTPS and allow motion access.');
+  }
+}
+
+function disableMotion(){
+  gyroEnabled=false;
+  document.body.classList.remove('motion-active');
+  gyroHasSignal=false;
+  autoRotate=true;
+  controls.enabled=true;
+  gyroX=gyroY=gyroTargetX=gyroTargetY=0;
+  hero.style.transform='rotateX(0deg) rotateY(0deg)';
+  document.documentElement.style.removeProperty('--gyro-x');
+  document.documentElement.style.removeProperty('--gyro-y');
+  document.getElementById('motionBtn').textContent='📱 Motion';
+  toast('3D motion OFF — auto-rotate restored.');
+}
+
+document.getElementById('motionBtn').addEventListener('click',()=>{if(gyroEnabled)disableMotion();else enableMotion()});
+window.addEventListener('orientationchange',()=>{if(gyroEnabled){gyroTargetX*=.35;gyroTargetY*=.35}});
+
+/* Menu */
+const navLinks=document.getElementById('navLinks');
+document.getElementById('menuBtn').addEventListener('click',()=>navLinks.classList.toggle('show'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('show')));
+
+/* Theme toggle */
+let lightMode=false;
+document.getElementById('themeBtn').addEventListener('click',()=>{
+  lightMode=!lightMode;
+  document.documentElement.style.setProperty('--bg',lightMode?'#eef6ff':'#030913');
+  document.documentElement.style.setProperty('--text',lightMode?'#10233a':'#edf6ff');
+  document.documentElement.style.setProperty('--muted',lightMode?'#49627b':'#9eb3c9');
+  document.body.style.background=lightMode?'#eef6ff':'#030913';
+  toast(lightMode?'Light base enabled':'Dark base restored');
+});
+
+function toast(message){const el=document.getElementById('toast');el.textContent=message;el.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>el.classList.remove('show'),2600)}
+
+/* Photo upload */
+function attachPhoto(file){if(!file)return;const url=URL.createObjectURL(file);const img1=document.getElementById('heroPhoto');img1.style.display='block';img1.src=url;const box=document.getElementById('photoPreview');box.innerHTML=`<img src="${url}" alt="Ravinder Bhati">`;toast('Photo preview updated on this device.');}
+document.getElementById('photoUpload').addEventListener('change',e=>attachPhoto(e.target.files[0]));
+document.getElementById('photoUpload2').addEventListener('change',e=>attachPhoto(e.target.files[0]));
+
+/* Animate stats when visible */
+const stats=document.querySelectorAll('.stat-number');
+const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.animate([{transform:'translateY(8px)',opacity:0},{transform:'translateY(0)',opacity:1}],{duration:650,easing:'cubic-bezier(.2,.8,.2,1)',fill:'forwards'});io.unobserve(entry.target)}}),{threshold:.3});
+stats.forEach(s=>io.observe(s));
 </script>
-</body>
 
+</body>
 </html>
