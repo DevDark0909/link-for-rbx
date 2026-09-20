@@ -42,73 +42,119 @@ body{
 a{color:inherit;text-decoration:none}
 button,input{font:inherit}
 
-/* ----- INTRO OVERLAY ----- */
+/* ----- INTRO & PASSWORD OVERLAY ----- */
 #intro-overlay {
   position: fixed;
   inset: 0;
   z-index: 5000;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 12vh;
-  background: radial-gradient(circle at 50% 50%, rgba(2,11,6,0.4) 0%, rgba(2,11,6,0.98) 100%);
-  backdrop-filter: blur(6px);
-  transition: opacity 1.5s ease-in-out, visibility 1.5s;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 50%, rgba(2,11,6,0.3) 0%, rgba(2,11,6,0.95) 100%);
+  backdrop-filter: blur(8px);
+  transition: opacity 1.2s ease-in-out, visibility 1.2s;
 }
 #intro-overlay.hidden {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
-.intro-text {
+.intro-glass-panel {
+  background: linear-gradient(145deg, rgba(74, 222, 128, 0.1), rgba(2, 11, 6, 0.8));
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  padding: 50px 40px;
+  border-radius: 30px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
   text-align: center;
-  margin-bottom: 30px;
-  animation: floatUp 2s ease-out;
+  animation: floatUp 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  width: min(90%, 450px);
 }
 .intro-text h1 {
-  font-size: clamp(36px, 7vw, 72px);
+  font-size: clamp(32px, 6vw, 48px);
   background: linear-gradient(90deg, #facc15, #fff, #4ade80);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .intro-text p {
   color: #a7f3d0;
-  font-size: 20px;
+  font-size: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-weight: 600;
+  margin-bottom: 30px;
+}
+.password-box {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+#passInput {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  padding: 16px 20px;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  outline: none;
+  transition: 0.3s;
+  letter-spacing: 2px;
+}
+#passInput::placeholder {
+  color: rgba(167, 243, 208, 0.4);
+  letter-spacing: 1px;
+}
+#passInput:focus {
+  border-color: #4ade80;
+  box-shadow: 0 0 20px rgba(74, 222, 128, 0.3);
+  background: rgba(0, 0, 0, 0.8);
 }
 .enter-btn {
-  padding: 16px 45px;
-  border-radius: 35px;
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
   border: 1px solid rgba(255,255,255,0.25);
   background: linear-gradient(135deg, #16a34a, #22c55e);
   color: white;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 12px 35px rgba(34,197,94,0.45);
+  box-shadow: 0 12px 30px rgba(34,197,94,0.3);
   transition: 0.3s;
-  animation: pulse 2s infinite;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 .enter-btn:hover {
-  transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 15px 45px rgba(34,197,94,0.65);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(34,197,94,0.5);
 }
-
-@keyframes floatUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(34,197,94,0.7); } 70% { box-shadow: 0 0 0 20px rgba(34,197,94,0); } 100% { box-shadow: 0 0 0 0 rgba(34,197,94,0); } }
+.error-text {
+  color: #fb7185;
+  font-size: 13px;
+  min-height: 20px;
+  font-weight: 600;
+  margin-top: -5px;
+}
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+@keyframes shake {
+  10%, 90% { transform: translate3d(-2px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-8px, 0, 0); }
+  40%, 60% { transform: translate3d(8px, 0, 0); }
+}
+@keyframes floatUp { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 /* ----- MAIN CONTENT WRAPPER ----- */
 #main-ui {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 2s ease-in-out 0.5s;
+  transition: opacity 1.5s ease-in-out 0.2s;
 }
 #main-ui.visible {
   opacity: 1;
@@ -269,9 +315,286 @@ footer h2{color:#bbf7d0;margin-bottom:8px; font-size: 24px; letter-spacing: 2px;
   .job-head h3{font-size:18px}
   .photo-preview{width:200px;height:200px}
   .intro-text h1 { font-size: 38px; }
-  .intro-text p { font-size: 16px; }
+  .intro-text p { font-size: 14px; }
+  .intro-glass-panel { padding: 40px 25px; }
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+
+/* ===== V2 3D PORTFOLIO SHOWCASE ===== */
+:root{
+  --showcase-perspective: 1600px;
+  --showcase-rx: 0deg;
+  --showcase-ry: 0deg;
+  --showcase-sx: 0;
+  --showcase-sy: 0;
+}
+.hero-3d-showcase{
+  position:absolute;
+  top:92px;
+  left:50%;
+  width:min(980px,92%);
+  height:390px;
+  transform:translateX(-50%);
+  perspective:var(--showcase-perspective);
+  pointer-events:none;
+  z-index:2;
+  isolation:isolate;
+}
+.hero-3d-grid{
+  position:absolute;
+  inset:0;
+  opacity:.34;
+  border-radius:32px;
+  background:
+    linear-gradient(rgba(74,222,128,.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,222,128,.13) 1px, transparent 1px),
+    radial-gradient(circle at 50% 45%, rgba(34,197,94,.16), transparent 55%);
+  background-size:34px 34px,34px 34px,100% 100%;
+  mask-image:linear-gradient(to bottom,black,transparent 90%);
+  transform:translateZ(-120px) rotateX(62deg) translateY(74px);
+  filter:blur(.2px);
+}
+.hero-3d-glow{
+  position:absolute;
+  left:50%; top:48%;
+  width:480px; height:250px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(74,222,128,.24), rgba(34,197,94,.08) 34%, transparent 72%);
+  filter:blur(24px);
+  animation:heroGlow 4.5s ease-in-out infinite;
+}
+@keyframes heroGlow{50%{transform:translate(-50%,-50%) scale(1.08);opacity:.78}}
+.hero-3d-stage{
+  position:absolute;
+  left:50%; top:50%;
+  width:760px; height:330px;
+  transform-style:preserve-3d;
+  transform:translate(-50%,-50%) rotateX(var(--showcase-rx)) rotateY(var(--showcase-ry));
+  transition:transform .16s ease-out;
+  animation:showcaseFloat 6s ease-in-out infinite;
+}
+@keyframes showcaseFloat{
+  0%,100%{margin-top:0}
+  50%{margin-top:-8px}
+}
+.device-shadow{
+  position:absolute; left:50%; bottom:-18px;
+  width:590px; height:65px;
+  transform:translateX(-50%) translateZ(-32px) rotateX(72deg);
+  background:rgba(0,0,0,.55);
+  filter:blur(24px);
+  border-radius:50%;
+}
+.device-desktop{
+  position:absolute;
+  left:50%; top:50%;
+  width:585px; height:318px;
+  transform:translate(-50%,-54%) translateZ(30px);
+  transform-style:preserve-3d;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.18);
+  background:linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.04));
+  box-shadow:0 40px 100px rgba(0,0,0,.62), inset 0 1px 0 rgba(255,255,255,.2), 0 0 55px rgba(34,197,94,.12);
+  padding:10px;
+  backdrop-filter:blur(14px);
+}
+.device-desktop::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  border-radius:22px;
+  background:linear-gradient(135deg,rgba(74,222,128,.35),transparent 32%,rgba(56,189,248,.20) 68%,rgba(250,204,21,.22));
+  z-index:-1;
+  filter:blur(8px);
+  opacity:.65;
+}
+.device-topbar{
+  height:26px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:0 8px;
+  color:rgba(255,255,255,.72);
+  font-size:9px;
+  letter-spacing:.7px;
+}
+.window-dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 9px rgba(74,222,128,.8)}
+.window-dot:nth-child(2){background:#facc15;box-shadow:0 0 9px rgba(250,204,21,.6)}
+.window-dot:nth-child(3){background:#38bdf8;box-shadow:0 0 9px rgba(56,189,248,.6)}
+.window-title{margin-left:auto;text-transform:uppercase;opacity:.65}
+.device-screen{
+  position:relative;
+  height:calc(100% - 26px);
+  overflow:hidden;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.11);
+  background:
+    radial-gradient(circle at 20% 20%,rgba(74,222,128,.16),transparent 30%),
+    radial-gradient(circle at 90% 80%,rgba(56,189,248,.12),transparent 26%),
+    linear-gradient(145deg,#07150d,#02110a 58%,#061f12);
+}
+.device-screen::after{
+  content:"";
+  position:absolute; inset:0;
+  background:linear-gradient(transparent 0 47%,rgba(255,255,255,.025) 50%,transparent 53%);
+  background-size:100% 8px;
+  mix-blend-mode:screen;
+  pointer-events:none;
+}
+.mini-app{position:absolute;inset:16px;display:grid;grid-template-columns:130px 1fr;gap:14px}
+.mini-sidebar{border:1px solid rgba(255,255,255,.08);border-radius:13px;background:rgba(255,255,255,.035);padding:12px}
+.mini-logo{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#dcfce7;margin-bottom:15px}
+.mini-nav{display:grid;gap:7px}
+.mini-nav span{font-size:8px;color:#86efac;padding:6px 7px;border-radius:8px;background:rgba(34,197,94,.055)}
+.mini-nav span:first-child{color:#fff;background:rgba(34,197,94,.16);box-shadow:0 0 12px rgba(34,197,94,.08)}
+.mini-content{min-width:0}
+.mini-hero-line{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.mini-kicker{font-size:8px;text-transform:uppercase;letter-spacing:2px;color:#4ade80;font-weight:800}
+.mini-pill{font-size:7px;color:#fef08a;border:1px solid rgba(250,204,21,.26);padding:4px 7px;border-radius:999px;background:rgba(250,204,21,.08)}
+.mini-title{font-size:26px;font-weight:950;letter-spacing:1px;margin-top:6px;background:linear-gradient(90deg,#4ade80,#fff,#facc15);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.mini-copy{font-size:8px;color:#9ad9b1;max-width:370px;margin-top:4px;line-height:1.5}
+.mini-actions{display:flex;gap:6px;margin-top:9px}
+.mini-action{font-size:7px;padding:6px 9px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:#dcfce7}
+.mini-action.primary{background:linear-gradient(135deg,#16a34a,#22c55e);border-color:rgba(74,222,128,.35);color:#fff}
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.mini-stat{padding:8px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(255,255,255,.025)}
+.mini-stat b{display:block;font-size:13px;color:#f0fdf4}
+.mini-stat span{font-size:6.5px;color:#7fbc96;text-transform:uppercase;letter-spacing:.8px}
+.mini-3d-chip{
+  position:absolute;right:16px;bottom:14px;
+  padding:6px 9px;border-radius:999px;
+  font-size:7px;color:#dfffea;
+  background:rgba(34,197,94,.10);
+  border:1px solid rgba(74,222,128,.28);
+  box-shadow:0 0 18px rgba(34,197,94,.14);
+}
+.device-base{
+  position:absolute;left:50%;top:100%;
+  width:250px;height:28px;
+  transform:translate(-50%,0) translateZ(5px) rotateX(68deg);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:6px 6px 18px 18px;
+  background:linear-gradient(180deg,#21372a,#07120c);
+  box-shadow:0 15px 35px rgba(0,0,0,.55);
+}
+.device-neck{position:absolute;left:50%;top:88%;width:70px;height:25px;transform:translateX(-50%) translateZ(8px);background:linear-gradient(180deg,#1b2e22,#0b1510);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%);border-bottom:1px solid rgba(255,255,255,.12)}
+.device-phone{
+  position:absolute;right:18px;top:42%;
+  width:155px;height:300px;
+  transform:translateZ(88px) rotateY(-17deg) rotateZ(4deg);
+  border-radius:27px;
+  padding:8px;
+  background:linear-gradient(145deg,#16291f,#050a07 70%);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:20px 36px 65px rgba(0,0,0,.55),0 0 35px rgba(56,189,248,.10);
+}
+.phone-screen{height:100%;border-radius:20px;overflow:hidden;background:linear-gradient(180deg,#071d11,#031007);border:1px solid rgba(255,255,255,.1);padding:13px}
+.phone-notch{width:52px;height:10px;border-radius:0 0 9px 9px;background:#010603;margin:-13px auto 10px}
+.phone-brand{font-size:8px;font-weight:900;letter-spacing:1.5px;color:#dcfce7}
+.phone-big{margin-top:14px;font-size:24px;font-weight:900;background:linear-gradient(90deg,#4ade80,#fff,#facc15);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.phone-sub{font-size:7px;color:#8bc29f;margin-top:5px;line-height:1.5}
+.phone-chart{height:78px;margin-top:13px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:linear-gradient(180deg,rgba(34,197,94,.14),rgba(34,197,94,.02));position:relative;overflow:hidden}
+.phone-chart::before{content:"";position:absolute;left:9px;right:9px;bottom:13px;height:45px;background:linear-gradient(140deg,transparent 0 12%,rgba(74,222,128,.25) 12% 17%,transparent 17% 26%,rgba(74,222,128,.38) 26% 31%,transparent 31% 43%,rgba(250,204,21,.32) 43% 48%,transparent 48% 59%,rgba(74,222,128,.52) 59% 64%,transparent 64% 74%,rgba(56,189,248,.42) 74% 79%,transparent 79% 100%);clip-path:polygon(0 78%,8% 72%,17% 74%,27% 48%,37% 62%,48% 33%,59% 49%,68% 19%,76% 35%,86% 11%,100% 25%,100% 100%,0 100%)}
+.phone-chip{display:inline-block;margin-top:12px;font-size:6.5px;padding:5px 7px;border-radius:999px;border:1px solid rgba(74,222,128,.3);color:#86efac;background:rgba(34,197,94,.08)}
+.device-tablet{
+  position:absolute;left:35px;top:62%;
+  width:175px;height:112px;
+  transform:translateZ(72px) rotateY(18deg) rotateZ(-5deg);
+  border-radius:15px;padding:6px;
+  background:linear-gradient(145deg,#182b20,#07100b);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:-20px 30px 50px rgba(0,0,0,.45),0 0 30px rgba(250,204,21,.08);
+}
+.tablet-screen{height:100%;border-radius:10px;overflow:hidden;background:radial-gradient(circle at 80% 20%,rgba(250,204,21,.13),transparent 30%),linear-gradient(145deg,#0a1b10,#051008);border:1px solid rgba(255,255,255,.09);padding:9px}
+.tablet-title{font-size:7px;color:#fef08a;letter-spacing:1px;text-transform:uppercase}
+.tablet-number{font-size:23px;color:#fff;font-weight:900;margin-top:5px}
+.tablet-bar{height:8px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:6px}
+.tablet-bar i{display:block;height:100%;width:86%;border-radius:99px;background:linear-gradient(90deg,#16a34a,#4ade80,#facc15);box-shadow:0 0 12px rgba(74,222,128,.28)}
+.float-tag{position:absolute;padding:8px 11px;border-radius:12px;font-size:8px;font-weight:800;letter-spacing:.8px;background:rgba(3,16,8,.82);border:1px solid rgba(255,255,255,.10);box-shadow:0 15px 35px rgba(0,0,0,.35);backdrop-filter:blur(10px);color:#dcfce7}
+.float-tag.one{left:0;top:18%;transform:translateZ(120px) rotateY(15deg)}
+.float-tag.two{right:5px;top:13%;transform:translateZ(120px) rotateY(-14deg);color:#fef08a}
+.float-tag.three{left:24%;bottom:0;transform:translateZ(105px) rotateX(8deg);color:#7dd3fc}
+
+.hero-card .canvas-spacer{height:405px}
+@media(max-width:900px){
+  .hero-3d-showcase{top:88px;height:350px;width:96%}
+  .hero-3d-stage{width:690px;transform:translate(-50%,-50%) scale(.89) rotateX(var(--showcase-rx)) rotateY(var(--showcase-ry))}
+  .hero-card .canvas-spacer{height:360px}
+}
+@media(max-width:700px){
+  .hero-3d-showcase{top:76px;height:278px;width:100%;overflow:visible}
+  .hero-3d-stage{width:470px;height:245px;transform:translate(-50%,-50%) scale(.84) rotateX(var(--showcase-rx)) rotateY(var(--showcase-ry));animation-duration:7.5s}
+  .hero-card .canvas-spacer{height:295px}
+  .device-desktop{width:392px;height:215px;border-radius:16px;padding:7px;transform:translate(-50%,-54%) translateZ(15px)}
+  .device-topbar{height:18px;padding:0 6px;font-size:7px}
+  .window-dot{width:5px;height:5px}
+  .device-screen{height:calc(100% - 18px);border-radius:10px}
+  .mini-app{inset:9px;grid-template-columns:66px 1fr;gap:8px}
+  .mini-sidebar{border-radius:8px;padding:7px}
+  .mini-logo{font-size:7px;margin-bottom:8px}
+  .mini-nav{gap:3px}
+  .mini-nav span{font-size:5px;padding:4px}
+  .mini-kicker{font-size:5px;letter-spacing:1.2px}
+  .mini-pill{font-size:4.8px;padding:3px 5px}
+  .mini-title{font-size:16px;margin-top:3px}
+  .mini-copy{font-size:5px;max-width:190px}
+  .mini-actions{gap:4px;margin-top:5px}
+  .mini-action{font-size:4.8px;padding:4px 6px}
+  .mini-stats{gap:4px;margin-top:7px}
+  .mini-stat{padding:5px;border-radius:6px}
+  .mini-stat b{font-size:8px}
+  .mini-stat span{font-size:4px;letter-spacing:.35px}
+  .mini-3d-chip{right:8px;bottom:7px;font-size:4.5px;padding:4px 6px}
+  .device-base{width:165px;height:20px;top:100%;transform:translate(-50%,0) translateZ(2px) rotateX(68deg)}
+  .device-neck{width:46px;height:18px;top:88%}
+  .device-phone{width:91px;height:178px;right:5px;top:37%;padding:5px;border-radius:18px;transform:translateZ(58px) rotateY(-17deg) rotateZ(4deg)}
+  .phone-screen{border-radius:13px;padding:8px}
+  .phone-notch{width:31px;height:6px;margin:-8px auto 7px;border-radius:0 0 6px 6px}
+  .phone-brand{font-size:4.7px;letter-spacing:.8px}
+  .phone-big{margin-top:8px;font-size:14px}
+  .phone-sub{font-size:4px}
+  .phone-chart{height:46px;margin-top:8px;border-radius:7px}
+  .phone-chip{font-size:3.8px;margin-top:7px;padding:3px 4px}
+  .device-tablet{width:106px;height:69px;left:15px;top:63%;padding:4px;border-radius:10px;transform:translateZ(47px) rotateY(18deg) rotateZ(-5deg)}
+  .tablet-screen{border-radius:6px;padding:6px}
+  .tablet-title{font-size:4px}
+  .tablet-number{font-size:13px;margin-top:3px}
+  .tablet-bar{height:5px;margin-top:4px}
+  .float-tag{font-size:5px;padding:5px 6px;border-radius:7px}
+  .float-tag.one{left:-2px;top:12%}
+  .float-tag.two{right:0;top:10%}
+  .float-tag.three{left:12%;bottom:-4px}
+  .hero-card .canvas-spacer{height:298px}
+}
+@media(max-width:440px){
+  .hero-3d-showcase{top:75px;height:245px}
+  .hero-3d-stage{width:420px;transform:translate(-50%,-50%) scale(.72) rotateX(var(--showcase-rx)) rotateY(var(--showcase-ry))}
+  .hero-card .canvas-spacer{height:268px}
+  #hero3d{opacity:.65}
+}
+@media(hover:hover) and (pointer:fine){
+  .hero-3d-showcase{pointer-events:auto;cursor:grab}
+  .hero-3d-showcase:active{cursor:grabbing}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-3d-stage,.hero-3d-glow{animation:none!important}
+  .hero-3d-stage{transition:none!important}
+}
+
+/* Better mobile ergonomics */
+@media(max-width:600px){
+  .nav-actions{gap:6px}
+  .icon-btn{min-height:44px;min-width:44px;padding:9px 11px}
+  .nav-links a{width:100%;padding:12px 14px}
+  .section-sub{font-size:14px}
+  .card,.project,.contact{padding:20px}
+  .job{padding-left:38px}
+  .timeline::before{left:11px}
+  .job-dot{left:3px}
+  .job ul{font-size:13px}
+}
+
 </style>
 </head>
 
@@ -280,13 +603,20 @@ footer h2{color:#bbf7d0;margin-bottom:8px; font-size: 24px; letter-spacing: 2px;
 <!-- 3D Canvas rendering underneath everything -->
 <canvas id="hero3d"></canvas>
 
-<!-- INTRO ANIMATION OVERLAY -->
+<!-- PASSWORD PROTECTED INTRO OVERLAY -->
 <div id="intro-overlay">
-  <div class="intro-text">
-    <h1>Hey, I'm Mihaan!</h1>
-    <p>Welcome to my 3D World</p>
+  <div class="intro-glass-panel">
+    <div class="intro-text">
+      <h1>MIHAAN</h1>
+      <p>Interactive 3D Portfolio</p>
+    </div>
+    <div class="password-box">
+      <!-- Hint: The password is "mihaan" -->
+      <input type="password" id="passInput" placeholder="Enter Password" autocomplete="off">
+      <div id="passError" class="error-text"></div>
+      <button class="enter-btn" id="unlockBtn">Unlock Portfolio</button>
+    </div>
   </div>
-  <button class="enter-btn" id="enterBtn">Enter Portfolio</button>
 </div>
 
 <!-- MAIN UI WRAPPER -->
@@ -313,6 +643,68 @@ footer h2{color:#bbf7d0;margin-bottom:8px; font-size: 24px; letter-spacing: 2px;
       <div class="hero-top">
         <div class="status"><i></i> Student & Athlete</div>
         <div class="hero-badge">Future Cricket Star</div>
+      </div>
+
+
+      <div class="hero-3d-showcase" id="hero3dShowcase" aria-label="Interactive 3D website preview">
+        <div class="hero-3d-glow"></div>
+        <div class="hero-3d-grid"></div>
+        <div class="hero-3d-stage" id="hero3dStage">
+          <div class="device-shadow"></div>
+          <div class="float-tag one">⚡ LIVE PROFILE</div>
+          <div class="float-tag two">🏏 CRICKET MODE</div>
+          <div class="float-tag three">⌁ 3D INTERFACE</div>
+
+          <div class="device-desktop">
+            <div class="device-topbar">
+              <span class="window-dot"></span><span class="window-dot"></span><span class="window-dot"></span>
+              <span class="window-title">mihaan.3d / portfolio</span>
+            </div>
+            <div class="device-screen">
+              <div class="mini-app">
+                <aside class="mini-sidebar">
+                  <div class="mini-logo">MIHAAN</div>
+                  <div class="mini-nav">
+                    <span>Overview</span><span>Stats</span><span>Highlights</span><span>Journey</span><span>Contact</span>
+                  </div>
+                </aside>
+                <div class="mini-content">
+                  <div class="mini-hero-line"><div class="mini-kicker">Student · Athlete · Creator</div><div class="mini-pill">8TH GRADE</div></div>
+                  <div class="mini-title">Play. Learn. Build.</div>
+                  <div class="mini-copy">A cinematic portfolio experience combining school life, cricket milestones and technology projects.</div>
+                  <div class="mini-actions"><span class="mini-action primary">View Stats</span><span class="mini-action">Explore Journey</span></div>
+                  <div class="mini-stats">
+                    <div class="mini-stat"><b>126</b><span>Matches</span></div>
+                    <div class="mini-stat"><b>2.5K</b><span>Runs</span></div>
+                    <div class="mini-stat"><b>78*</b><span>Best</span></div>
+                  </div>
+                  <span class="mini-3d-chip">● 3D EXPERIENCE ONLINE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="device-neck"></div>
+          <div class="device-base"></div>
+
+          <div class="device-tablet">
+            <div class="tablet-screen">
+              <div class="tablet-title">Performance</div>
+              <div class="tablet-number">86%</div>
+              <div class="tablet-bar"><i></i></div>
+            </div>
+          </div>
+
+          <div class="device-phone">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div class="phone-brand">MIHAAN · PLAYER ID</div>
+              <div class="phone-big">78*</div>
+              <div class="phone-sub">Highest score · Featured performance</div>
+              <div class="phone-chart"></div>
+              <span class="phone-chip">⚡ FORM RISING</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="canvas-spacer"></div>
@@ -358,9 +750,9 @@ footer h2{color:#bbf7d0;margin-bottom:8px; font-size: 24px; letter-spacing: 2px;
     <div class="stats">
       <div class="stat"><div class="stat-number">126</div><div class="stat-label">Total Matches</div></div>
       <div class="stat"><div class="stat-number">2,500</div><div class="stat-label">Balls Faced</div></div>
-      <div class="stat"><div class="stat-number">2,500</div><div class="stat-label">Runs Scored</div></div>
-      <div class="stat"><div class="stat-number">78*</div><div class="stat-label">Highest Score</div></div>
-      <div class="stat"><div class="stat-number">18</div><div class="stat-label">Wickets Taken</div></div>
+      <div class="stat"><div class="stat-number">2,00</div><div class="stat-label">Runs Scored</div></div>
+      <div class="stat"><div class="stat-number">128*</div><div class="stat-label">Highest Score</div></div>
+      <div class="stat"><div class="stat-number">440</div><div class="stat-label">Wickets Taken</div></div>
       <div class="stat"><div class="stat-number">5</div><div class="stat-label">Man of the Match</div></div>
     </div>
   </section>
@@ -421,7 +813,7 @@ footer h2{color:#bbf7d0;margin-bottom:8px; font-size: 24px; letter-spacing: 2px;
     <h2>MIHAAN</h2>
     <p>8th Grade Student · Cricketer · Tech Enthusiast</p>
     <p style="margin-top:8px; color: #4ade80; font-weight: 600;">Dream Big. Work Hard. Play Fair.</p>
-    <p style="margin-top:16px;font-size:12px; color: #6fa582;">Custom 3D Engine. Built for performance on Mobile & Web.</p>
+    <p style="margin-top:16px;font-size:12px; color: #6fa582;">Custom 3D Engine inspired by modern open-source portfolio patterns. Built for desktop + mobile performance. V2.</p>
   </footer>
 </div>
 
@@ -685,16 +1077,34 @@ function animate(){
 }
 animate();
 
-/* ENTER BUTTON LOGIC */
-document.getElementById('enterBtn').addEventListener('click', () => {
-  const overlay = document.getElementById('intro-overlay');
-  overlay.classList.add('hidden');
-  
-  // Start 3D camera swoop
-  appState = 'transition';
-  
-  // Show Main UI
-  document.getElementById('main-ui').classList.add('visible');
+/* PASSWORD & ENTRY LOGIC */
+const CORRECT_PASSWORD = "mihaan"; // Set your password here
+const passInput = document.getElementById('passInput');
+const unlockBtn = document.getElementById('unlockBtn');
+const passError = document.getElementById('passError');
+const panel = document.querySelector('.intro-glass-panel');
+
+function attemptUnlock() {
+  const val = passInput.value.trim().toLowerCase();
+  if (val === CORRECT_PASSWORD) {
+    // Success
+    document.getElementById('intro-overlay').classList.add('hidden');
+    appState = 'transition';
+    document.getElementById('main-ui').classList.add('visible');
+  } else {
+    // Fail
+    panel.classList.remove('shake');
+    void panel.offsetWidth; // trigger reflow
+    panel.classList.add('shake');
+    passError.textContent = 'Incorrect Password. Try again.';
+    passInput.value = '';
+    passInput.focus();
+  }
+}
+
+unlockBtn.addEventListener('click', attemptUnlock);
+passInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') attemptUnlock();
 });
 
 /* GYRO ENGINE (MOBILE) */
@@ -705,6 +1115,8 @@ function applyOrientation(beta,gamma){
   if(Math.abs(x)<2) x=0; if(Math.abs(y)<2) y=0;
   gyroTargetX = Math.max(-1, Math.min(1, x/30));
   gyroTargetY = Math.max(-1, Math.min(1, y/25));
+  document.documentElement.style.setProperty('--showcase-rx', `${(-gyroTargetY * 6).toFixed(2)}deg`);
+  document.documentElement.style.setProperty('--showcase-ry', `${(gyroTargetX * 9).toFixed(2)}deg`);
 }
 function handleOrientation(e){if(e&&e.beta!==null)applyOrientation(e.beta,e.gamma);}
 async function enableMotion(){
@@ -723,6 +1135,8 @@ async function enableMotion(){
 function disableMotion(){
   gyroEnabled=false; document.body.classList.remove('motion-active'); autoRotate=true; controls.enabled=true;
   gyroX=gyroY=gyroTargetX=gyroTargetY=0;
+  document.documentElement.style.setProperty('--showcase-rx','0deg');
+  document.documentElement.style.setProperty('--showcase-ry','0deg');
   const hero=document.getElementById('heroCard'); if(hero) hero.style.transform='';
   document.getElementById('motionBtn').textContent='📱 Motion'; toast('Motion Disabled');
 }
@@ -750,6 +1164,58 @@ if(heroCard) heroCard.addEventListener('mousemove',e=>{
   heroCard.style.transform=`rotateX(${-y*3.5}deg) rotateY(${x*4.5}deg)`;
 });
 if(heroCard) heroCard.addEventListener('mouseleave',()=>{if(!gyroEnabled)heroCard.style.transform='';});
+
+
+/* ===== V2 3D SHOWCASE INTERACTION ===== */
+const showcase = document.getElementById('hero3dShowcase');
+const showcaseStage = document.getElementById('hero3dStage');
+let showcasePointerActive = false;
+if (showcase && showcaseStage) {
+  showcase.addEventListener('pointermove', (e) => {
+    if (window.innerWidth < 701 || gyroEnabled || appState !== 'main') return;
+    const r = showcase.getBoundingClientRect();
+    const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+    const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+    document.documentElement.style.setProperty('--showcase-rx', `${(-y * 7).toFixed(2)}deg`);
+    document.documentElement.style.setProperty('--showcase-ry', `${(x * 11).toFixed(2)}deg`);
+    showcasePointerActive = true;
+  }, { passive:true });
+
+  showcase.addEventListener('pointerleave', () => {
+    if (gyroEnabled) return;
+    document.documentElement.style.setProperty('--showcase-rx','0deg');
+    document.documentElement.style.setProperty('--showcase-ry','0deg');
+    showcasePointerActive = false;
+  }, { passive:true });
+
+  window.addEventListener('scroll', () => {
+    if (gyroEnabled || window.innerWidth < 701) return;
+    const y = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1);
+    if (!showcasePointerActive) {
+      document.documentElement.style.setProperty('--showcase-rx', `${(y * 4.5).toFixed(2)}deg`);
+      document.documentElement.style.setProperty('--showcase-ry', `${(-y * 7.5).toFixed(2)}deg`);
+    }
+  }, { passive:true });
+}
+
+// Give the page a subtle 3D depth cue as sections enter the viewport.
+const depthSections = document.querySelectorAll('main section');
+const depthObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.setProperty('--depth-in', '1');
+      entry.target.animate(
+        [
+          { opacity: .82, transform: 'translateY(18px) rotateX(2deg)' },
+          { opacity: 1, transform: 'translateY(0) rotateX(0)' }
+        ],
+        { duration: 700, easing: 'cubic-bezier(.2,.8,.2,1)', fill: 'forwards' }
+      );
+      depthObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold:.16 });
+depthSections.forEach(s => depthObserver.observe(s));
 
 </script>
 </body>
